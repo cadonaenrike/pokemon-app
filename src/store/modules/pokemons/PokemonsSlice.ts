@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Pokemon, PokemonColor } from "../../../types/pokemonTypes";
+import { Pokemon } from "../../../types/pokemonTypes";
 
 interface PokemonState {
   pokemonList: Pokemon[];
-  pokemonColors: PokemonColor[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   page: number;
@@ -13,7 +12,6 @@ interface PokemonState {
 
 const initialState: PokemonState = {
   pokemonList: [],
-  pokemonColors: [],
   status: "idle",
   error: null,
   page: 1,
@@ -42,59 +40,32 @@ export const fetchPokemonList = createAsyncThunk(
   }
 );
 
-export const fetchPokemonColors = createAsyncThunk(
-  "pokemons/fetchPokemonColors",
-  async (id: number) => {
-    const response = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon-color/${id}/`
-    );
-    const promises = response.data.results.map((p: any) => {
-      return axios.get(p.url);
-    });
-
-    const result = await Promise.all(promises);
-    const data = result.reduce((acc, val) => {
-      acc.push(val.data);
-      return acc;
-    }, []);
-    console.log(data);
-    return data;
-  }
-);
-
 const pokemonsSlice = createSlice({
   name: "pokemons",
   initialState,
   reducers: {
-    setPage: (state, action) => {
-      state.page = action.payload;
+    setPage: (state, action: PayloadAction<number>) => {
+      return { ...state, page: action.payload };
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPokemonList.pending, (state) => {
-        state.status = "loading";
+        return { ...state, status: "loading" };
       })
       .addCase(fetchPokemonList.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.pokemonList = action.payload;
+        return {
+          ...state,
+          status: "succeeded",
+          pokemonList: action.payload,
+        };
       })
       .addCase(fetchPokemonList.rejected, (state, action) => {
-        state.status = "failed";
-        state.error =
-          action.error.message ?? "Erro ao buscar a lista de Pokémon";
-      })
-      .addCase(fetchPokemonColors.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchPokemonColors.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.pokemonColors = action.payload;
-      })
-      .addCase(fetchPokemonColors.rejected, (state, action) => {
-        state.status = "failed";
-        state.error =
-          action.error.message ?? "Erro ao buscar as cores de Pokémon";
+        return {
+          ...state,
+          status: "failed",
+          error: action.error.message ?? "Erro ao buscar a lista de Pokémon",
+        };
       });
   },
 });

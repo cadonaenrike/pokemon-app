@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Modal,
   Typography,
   Button,
-  List,
-  ListItem,
   Grid,
   Card,
   CardContent,
   CardMedia,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
 } from "@mui/material";
 import {
   ModalContainer,
@@ -16,10 +18,8 @@ import {
   PokeballBg,
   PokeballBgAfter,
   ModalBefore,
-} from "./PokemonDetailStiled";
-import { Pokemon, PokemonColor } from "../types/pokemonTypes";
-import { useAppDispatch, useAppSelector } from "../store";
-import { fetchPokemonColors } from "../store/modules/pokemons/PokemonsSlice";
+} from "./PokemonDetailStyled";
+import { Pokemon, PokemonType, colorType } from "../types/pokemonTypes";
 
 interface PokemonDetailModalProps {
   pokemon: Pokemon | null;
@@ -30,25 +30,11 @@ const PokemonDetailModal: React.FC<PokemonDetailModalProps> = ({
   pokemon,
   onClose,
 }) => {
-  const dispatch = useAppDispatch();
-  const colors = useAppSelector((state) => state.pokemons.pokemonColors);
-  const [pokemonColors, setPokemonColors] = useState<string[]>([]);
+  const getColorForType = (type: string): string => {
+    const color = colorType.find((colorEntry) => colorEntry.type === type);
+    return color ? color.card : "#dae0e3";
+  };
 
-  useEffect(() => {
-    const fetchColors = async () => {
-      if (pokemon) {
-        const resultAction = await dispatch(fetchPokemonColors(pokemon.id));
-        if (fetchPokemonColors.fulfilled.match(resultAction)) {
-          setPokemonColors(
-            resultAction.payload.map((c: PokemonColor) => c.name)
-          );
-        }
-      }
-    };
-
-    fetchColors();
-  }, [dispatch, pokemon]);
-  console.log(colors, pokemonColors);
   return (
     <Modal
       open={Boolean(pokemon)}
@@ -57,31 +43,18 @@ const PokemonDetailModal: React.FC<PokemonDetailModalProps> = ({
       aria-describedby="modal-modal-description"
     >
       <ModalContainer
-        style={{ width: "80%", height: "90vh" }}
         isOpen={Boolean(pokemon)}
+        color={getColorForType(pokemon?.types[0]?.type.name || "")}
+        className="container-modal"
       >
-        <CardMedia
-          component="img"
-          alt={pokemon?.name || ""}
-          image={pokemon?.sprites.front_default || ""}
-          style={{
-            objectFit: "cover",
-            width: "20svw",
-            height: "40vh",
-            borderTopLeftRadius: "12px",
-            borderTopRightRadius: "12px",
-            marginTop: "0px",
-            position: "absolute",
-            top: "0%",
-            left: "70%",
-          }}
-        />
         <ModalContent>
           <Card
-            style={{
-              width: "100%",
-              height: "100%",
-              border: "2px solid #ddd",
+            sx={{
+              width: "80%",
+              height: "90%",
+              border: `2px solid ${getColorForType(
+                pokemon?.types[0]?.type.name || ""
+              )}`,
               borderRadius: "12px",
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
               overflow: "hidden",
@@ -91,11 +64,32 @@ const PokemonDetailModal: React.FC<PokemonDetailModalProps> = ({
               alignItems: "center",
             }}
           >
-            <CardContent style={{ width: "80%", textAlign: "center" }}>
+            <CardMedia
+              component="img"
+              alt={pokemon?.name || ""}
+              image={pokemon?.sprites.front_default || ""}
+              sx={{ height: "250px", width: "250px" }}
+              style={{
+                margin: "40px",
+                position: "absolute",
+                bottom: "62%",
+                left: "68%",
+              }}
+            />
+            <CardContent
+              style={{
+                width: "100%",
+                height: "80vh",
+                textAlign: "center",
+                overflowX: "auto",
+              }}
+            >
               <Typography
                 variant="overline"
                 style={{
-                  fontSize: "50px",
+                  fontSize: "6vh",
+                  fontFamily: "VT323",
+                  marginBottom: "0px",
                 }}
                 gutterBottom
               >
@@ -104,75 +98,74 @@ const PokemonDetailModal: React.FC<PokemonDetailModalProps> = ({
 
               <Typography
                 variant="button"
-                fontSize={18}
-                color={pokemonColors}
+                fontSize={20}
+                color={getColorForType(pokemon?.types[0]?.type.name || "")}
                 paragraph
               >
-                Type: {pokemon?.types.map((v) => v.type.name).join(", ")}
+                Type:{" "}
+                {pokemon?.types.map((v: PokemonType) => v.type.name).join(", ")}
               </Typography>
 
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <Card
-                    style={{
-                      border: "2px solid #ddd",
-                      borderRadius: "8px",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                    }}
-                  >
-                    <CardContent>
-                      <Typography variant="h5" gutterBottom>
-                        Habilidades:
-                      </Typography>
-                      <List>
-                        {pokemon?.abilities.map((ability, index) => (
-                          <ListItem key={index}>
-                            <Typography variant="caption" fontSize={15}>
-                              {ability.ability.name}
-                            </Typography>
-                          </ListItem>
-                        ))}
-                      </List>
-                    </CardContent>
-                  </Card>
+              <Grid
+                container
+                spacing={2}
+                sx={{ paddingRight: "5vw", paddingLeft: "5vw" }}
+              >
+                <Grid item xs={12} md={6}>
+                  <Typography fontSize={16} fontWeight={900} paragraph>
+                    Lista de habilidades do personagem:
+                  </Typography>
+                  <List>
+                    {pokemon?.abilities.map((ability) => (
+                      <ListItem key={ability.ability.name}>
+                        <ListItemText primary={ability.ability.name} />
+                      </ListItem>
+                    ))}
+                  </List>
                 </Grid>
 
-                <Grid item xs={6}>
-                  <Card
-                    style={{
-                      border: "2px solid #ddd",
-                      borderRadius: "8px",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                    }}
-                  >
-                    <CardContent>
-                      <Typography variant="h5" gutterBottom>
-                        Status:
-                      </Typography>
-                      <List>
-                        {pokemon?.stats.map((stat, index) => (
-                          <ListItem key={index}>
-                            <Typography variant="caption" fontSize={15}>
-                              {`${stat.stat.name}: ${stat.base_stat}`}
-                            </Typography>
-                          </ListItem>
-                        ))}
-                      </List>
-                    </CardContent>
-                  </Card>
+                <Grid item xs={12} md={6}>
+                  <Typography fontSize={16} fontWeight={900} paragraph>
+                    Lista de stats:
+                  </Typography>
+                  <List>
+                    {pokemon?.stats.map((stat) => (
+                      <div key={stat.stat.name}>
+                        <ListItem>
+                          <ListItemText primary={stat.stat.name} />
+                          <ListItemText
+                            style={{ textAlign: "end" }}
+                            primary={stat.base_stat}
+                          />
+                        </ListItem>
+                        <Divider />
+                      </div>
+                    ))}
+                  </List>
                 </Grid>
               </Grid>
 
               <Button
-                onClick={onClose}
+                onClick={() => onClose?.()}
                 variant="contained"
-                color="primary"
-                style={{
-                  marginTop: "16px",
-                  backgroundColor: "#007bff",
-                  color: "#fff",
+                sx={{
+                  marginTop: "1vw",
+                  marginBottom: "1vw",
+                  height: "50px",
+                  width: "50%",
+                  backgroundColor: "#000000",
+                  color: getColorForType(pokemon?.types[0]?.type.name || ""),
                   borderRadius: "8px",
-                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+
+                  border: `solid 2px ${getColorForType(
+                    pokemon?.types[0]?.type.name || ""
+                  )}`,
+                  boxShadow: `2px 2px 5px 2px ${getColorForType(
+                    pokemon?.types[0]?.type.name || ""
+                  )}`,
+                  "&:hover": {
+                    backgroundColor: "#050505",
+                  },
                 }}
               >
                 Voltar

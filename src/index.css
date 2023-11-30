@@ -2,11 +2,9 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -16,8 +14,9 @@
 a {
   font-weight: 500;
   color: #646cff;
-  text-decoration: inherit;
+  text-decoration: none;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -46,9 +45,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
-}
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -59,10 +56,100 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
+}
+
+.pokemon-list-container {
+  background-image: url("./assets/fundoGrama.png");
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 30px solid rgb(105, 66, 64) !important;
+  padding: 20px;
+}
+
+.pokemon-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease-in-out;
+  background-color: transparent !important;
+}
+
+.pokemon-card-media {
+  object-fit: cover;
+  border-radius: 10px;
+  filter: brightness(1.2);
+}
+
+.open-card {
+  transform: scale(1.2);
+}
+
+.spin-animation {
+  animation: spin 0.7s ease-out, appear 1s ease-in;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.container-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.comic-button {
+  margin-top: 1vw;
+  display: inline-block;
+
+  font-size: 1.2vw;
+  font-family: "VT323";
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  margin-bottom: 1.5vw;
+  background-color: #7e2020;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #000;
+  transition: all 0.3s ease;
+}
+
+.comic-button:hover {
+  background-color: #ffffff;
+  color: #7e2020;
+  border: 2px solid #7e2020;
+  box-shadow: 5px 5px 0px #7e2020;
+}
+
+.comic-button:active {
+  background-color: #000000;
+  color: #fff;
+  box-shadow: none;
+  transform: translateY(4px);
 }

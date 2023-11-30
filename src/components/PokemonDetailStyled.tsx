@@ -31,16 +31,18 @@ const fill = keyframes`
   }
 `;
 
-export const ModalContainer = styled.div<{ isOpen: boolean }>`
+export const ModalContainer = styled.div<{ isOpen: boolean; color: string }>`
   position: fixed;
   display: flex;
   flex-direction: column;
   top: 50%;
   left: 50%;
   width: 90%;
+  height: 90%;
+  max-width: 900px;
   transform: translate(-50%, -50%);
   border-radius: 25px;
-  background: currentColor;
+  background: ${(props) => props.color};
   overflow: hidden;
   animation: ${(props) =>
       props.isOpen
@@ -54,8 +56,14 @@ export const ModalContainer = styled.div<{ isOpen: boolean }>`
 `;
 
 export const ModalContent = styled.div`
-  padding: 6vw 6vw 6vw 6vw;
+  padding: 2vw;
   flex: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 export const PokeballBg = styled.div`
@@ -64,6 +72,9 @@ export const PokeballBg = styled.div`
   width: 35%;
   height: 100%;
   overflow: hidden;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const PokeballBgAfter = styled.div`
@@ -91,10 +102,12 @@ export const ModalBefore = styled.div`
   font-weight: 800;
   text-transform: uppercase;
   mask-image: linear-gradient(to bottom, #000 50%, transparent 80%);
-
   -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 80%);
   -webkit-text-stroke: 2px rgba(255, 255, 255, 0.065);
   z-index: -1;
+  @media (max-width: 768px) {
+    font-size: 5vw;
+  }
 `;
 
 export const BackButton = styled(Button)`
@@ -110,6 +123,9 @@ export const BackButton = styled(Button)`
 
   &:hover {
     color: #fff;
+  }
+  @media (max-width: 768px) {
+    padding: 10px;
   }
 `;
 
@@ -138,5 +154,8 @@ export const ActiveButton = styled(Button)`
     );
     z-index: -1;
     animation: ${fill} 0.5s both;
+  }
+  @media (max-width: 768px) {
+    padding: 10px;
   }
 `;
