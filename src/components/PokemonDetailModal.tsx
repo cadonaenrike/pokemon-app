@@ -20,6 +20,7 @@ import {
   ModalBefore,
 } from "./PokemonDetailStyled";
 import { Pokemon, PokemonType, colorType } from "../types/pokemonTypes";
+import AddToFavoritesButton from "./AddButtonFavorite";
 
 interface PokemonDetailModalProps {
   pokemon: Pokemon | null;
@@ -144,15 +145,18 @@ const PokemonDetailModal: React.FC<PokemonDetailModalProps> = ({
                   </List>
                 </Grid>
               </Grid>
-
+              <AddToFavoritesButton pokemonId={pokemon!.id} />
               <Button
                 onClick={() => onClose?.()}
                 variant="contained"
                 sx={{
                   marginTop: "1vw",
                   marginBottom: "1vw",
-                  height: "50px",
-                  width: "50%",
+                  marginLeft: "1vw",
+                  height: "3.2vw",
+                  width: "30%",
+                  fontFamily: "VT323",
+                  fontSize: "1vw",
                   backgroundColor: "#000000",
                   color: getColorForType(pokemon?.types[0]?.type.name || ""),
                   borderRadius: "8px",

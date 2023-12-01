@@ -1,4 +1,3 @@
-// src/features/pokedex/pokedexSlice.ts
 import { createSlice } from "@reduxjs/toolkit";
 
 interface PokedexState {
@@ -15,10 +14,17 @@ const pokedexSlice = createSlice({
   reducers: {
     addToPokedex: (state, action) => {
       const { pokemonId } = action.payload;
+
       state.favoritePokemon.push(pokemonId);
+    },
+    removeFromPokedex: (state, action) => {
+      const { pokemonId } = action.payload;
+      state.favoritePokemon = state.favoritePokemon.filter(
+        (id) => id !== pokemonId
+      );
     },
   },
 });
 
-export const { addToPokedex } = pokedexSlice.actions;
+export const { addToPokedex, removeFromPokedex } = pokedexSlice.actions;
 export default pokedexSlice.reducer;

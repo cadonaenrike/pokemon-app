@@ -1,6 +1,7 @@
 import React from "react";
 import PokemonList from "./components/pokemonList";
 import { Grid } from "@mui/material";
+import Pokedex from "./components/Pokedex";
 
 const App: React.FC = () => {
   return (
@@ -15,7 +16,7 @@ const App: React.FC = () => {
         wrap="wrap"
         padding={10}
       >
-        <h1>Pokemons</h1>
+        <Pokedex />
         <PokemonList />
       </Grid>
     </>

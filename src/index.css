@@ -97,16 +97,7 @@ button:focus-visible {
 }
 
 .spin-animation {
-  animation: spin 0.7s ease-out, appear 1s ease-in;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(360deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
+  animation: appear 1s ease-in;
 }
 
 @keyframes appear {
@@ -152,4 +143,11 @@ button:focus-visible {
   color: #fff;
   box-shadow: none;
   transform: translateY(4px);
+}
+
+.gridNavigate {
+  background-image: url("./assets/fundoPagination.png") !important;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }

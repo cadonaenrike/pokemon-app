@@ -1,5 +1,9 @@
 import React from "react";
-import { Pagination, Box, IconButton } from "@mui/material";
+import { Box, Grid } from "@mui/material";
+import {
+  MdOutlineKeyboardDoubleArrowLeft,
+  MdOutlineKeyboardDoubleArrowRight,
+} from "react-icons/md";
 
 interface CustomPaginationProps {
   page: number;
@@ -12,61 +16,105 @@ const CustomPagination: React.FC<CustomPaginationProps> = ({
   count,
   onChange,
 }) => {
-  const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
-    value: number
-  ) => {
-    onChange(event as React.ChangeEvent<unknown>, value);
-  };
-
   return (
-    <Box
-      mt={2}
-      textAlign="center"
-      sx={{
-        position: "relative",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "50px",
-      }}
-    >
-      <IconButton
-        onClick={() =>
-          onChange(
-            null as unknown as React.ChangeEvent<unknown>,
-            Math.max(page - 1, 1)
-          )
-        }
-        disabled={page === 1}
-        sx={{ position: "absolute", left: "10px" }}
-      >
-        <img
-          src="./src/assets/back.png"
-          alt="Back"
-          style={{ width: "24px", height: "24px" }}
-        />
-      </IconButton>
+    <Grid container justifyContent="center" alignItems="center" mt={0}>
+      <Grid item xs={4}>
+        <Box
+          sx={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          <a
+            href="#"
+            onClick={(event) => {
+              event.preventDefault();
+              if (page !== 1) {
+                onChange(
+                  event as React.ChangeEvent<unknown>,
+                  Math.max(page - 1, 1)
+                );
+              }
+            }}
+            aria-disabled={page === 1}
+          >
+            <span
+              style={{
+                color: "black",
+                textDecoration: "none",
+                fontSize: "4vw",
+                fontWeight: "bold",
+              }}
+            >
+              <MdOutlineKeyboardDoubleArrowLeft />
+            </span>
+          </a>
+        </Box>
+      </Grid>
 
-      <Pagination count={count} page={page} onChange={handlePageChange} />
+      <Grid item xs={4}>
+        <Box
+          className="custom-pagination-box gridNavigate"
+          sx={{
+            position: "relative",
+            padding: "1vw",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "White",
+            fontSize: "5vw",
 
-      <IconButton
-        onClick={() =>
-          onChange(
-            null as unknown as React.ChangeEvent<unknown>,
-            Math.min(page + 1, count)
-          )
-        }
-        disabled={page === count}
-        sx={{ position: "absolute", right: "10px" }}
-      >
-        <img
-          src="./src/assets/next.png"
-          alt="Back"
-          style={{ width: "24px", height: "24px" }}
-        />
-      </IconButton>
-    </Box>
+            fontFamily: "VT323",
+            fontWeight: "bold",
+            backgroundSize: "contain",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            paddingTop: "0.5vw",
+            backgroundImage: "url('./assets/fundoPagination.png')",
+          }}
+        >
+          Box {page}
+        </Box>
+      </Grid>
+
+      <Grid item xs={4}>
+        <Box
+          sx={{
+            height: "50px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
+        >
+          <a
+            href="#"
+            onClick={(event) => {
+              event.preventDefault();
+              if (page !== count) {
+                onChange(
+                  event as React.ChangeEvent<unknown>,
+                  Math.min(page + 1, count)
+                );
+              }
+            }}
+            aria-disabled={page === count}
+          >
+            <span
+              style={{
+                color: "black",
+                textDecoration: "none",
+                fontSize: "4vw",
+                fontWeight: "bold",
+              }}
+            >
+              <MdOutlineKeyboardDoubleArrowRight />
+            </span>
+          </a>
+        </Box>
+      </Grid>
+    </Grid>
   );
 };
 
