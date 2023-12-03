@@ -1,6 +1,5 @@
 // src/features/pokedex/RemoveFromFavoritesButton.tsx
 import React from "react";
-import { Button } from "@mui/material";
 import { useAppDispatch } from "../store";
 import { removeFromPokedex } from "../store/modules/pokedex/pokedexSlice";
 
@@ -21,9 +20,9 @@ const RemoveFromFavoritesButton: React.FC<RemoveFromFavoritesButtonProps> = ({
   };
 
   return (
-    <Button onClick={handleRemoveFromPokedex} variant="outlined" size="small">
-      Remover dos Favoritos
-    </Button>
+    <button className="ui-btn" onClick={handleRemoveFromPokedex}>
+      Remover
+    </button>
   );
 };
 

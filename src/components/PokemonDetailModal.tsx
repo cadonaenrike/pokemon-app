@@ -51,13 +51,14 @@ const PokemonDetailModal: React.FC<PokemonDetailModalProps> = ({
         <ModalContent>
           <Card
             sx={{
-              width: "80%",
-              height: "90%",
-              border: `2px solid ${getColorForType(
+              width: "90%",
+              height: "100%",
+              border: `5px solid ${getColorForType(
                 pokemon?.types[0]?.type.name || ""
               )}`,
-              borderRadius: "12px",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+
+              borderRadius: "15px",
+              boxShadow: "0 4px 8px rgb(7, 7, 7)",
               overflow: "hidden",
               display: "flex",
               flexDirection: "column",
@@ -69,12 +70,12 @@ const PokemonDetailModal: React.FC<PokemonDetailModalProps> = ({
               component="img"
               alt={pokemon?.name || ""}
               image={pokemon?.sprites.front_default || ""}
-              sx={{ height: "250px", width: "250px" }}
+              sx={{ maxWidth: "15vw", maxHeight: "80vh" }}
               style={{
                 margin: "40px",
-                position: "absolute",
-                bottom: "62%",
-                left: "68%",
+                position: "fixed",
+                bottom: "50vh",
+                left: "52vw",
               }}
             />
             <CardContent
@@ -153,10 +154,10 @@ const PokemonDetailModal: React.FC<PokemonDetailModalProps> = ({
                   marginTop: "1vw",
                   marginBottom: "1vw",
                   marginLeft: "1vw",
-                  height: "3.2vw",
+                  height: "5vh",
                   width: "30%",
                   fontFamily: "VT323",
-                  fontSize: "1vw",
+                  fontSize: "3vh",
                   backgroundColor: "#000000",
                   color: getColorForType(pokemon?.types[0]?.type.name || ""),
                   borderRadius: "8px",

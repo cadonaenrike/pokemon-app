@@ -9,6 +9,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: url(http://www.rw-designer.com/cursor-extern.php?id=14474);
 }
 
 a {
@@ -71,8 +72,9 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 30px solid rgb(105, 66, 64) !important;
-  padding: 20px;
+  border: 3vw solid rgb(105, 66, 64) !important;
+  padding: 1vw;
+  margin-right: 2vw;
 }
 
 .pokemon-card {
@@ -80,8 +82,9 @@ button:focus-visible {
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding: 2vw;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin-bottom: 0.2vw;
   transition: transform 0.3s ease-in-out;
   background-color: transparent !important;
 }
@@ -115,9 +118,7 @@ button:focus-visible {
   align-items: center;
 }
 .comic-button {
-  margin-top: 1vw;
   display: inline-block;
-
   font-size: 1.2vw;
   font-family: "VT323";
   text-align: center;
@@ -150,4 +151,38 @@ button:focus-visible {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.ui-btn {
+  cursor: pointer;
+  border-radius: 0.5vw;
+  color: rgb(3, 3, 3);
+  border-style: solid;
+  background-color: transparent;
+  border-color: rgb(0, 0, 0);
+  transition: 0.2s ease;
+  text-transform: uppercase;
+  border-width: 0.1vw;
+  font-weight: 500;
+  font-size: 1.2vw;
+  font-family: "VT323";
+  letter-spacing: 0.1vw;
+  min-height: 1.2vw;
+}
+.ui-btn:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgb(202, 25, 25);
+  border-color: rgb(202, 25, 25);
+  text-shadow: 0 0 50px white, 0 0 20px white, 0 0 15px white;
+  box-shadow: 0 0 50px rgb(202, 25, 25), 0 0 30px rgb(202, 25, 25),
+    0 0 60px rgb(202, 25, 25), 0 0 120px rgb(202, 25, 25);
+  font-size: 20px;
+  width: 7vw;
+  height: 5vh;
+  letter-spacing: 0.1vw;
+}
+.ui-btn:active {
+  width: 7vw;
+  height: 5vh;
+  letter-spacing: 0.1vw;
 }

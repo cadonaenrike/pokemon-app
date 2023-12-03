@@ -66,113 +66,121 @@ const PokemonList: React.FC = () => {
 
   return (
     <>
-      <CustomPagination count={65} page={page} onChange={handlePageChange} />
-      <div className="pokemon-list-container">
-        <Grid container spacing={2}>
-          {status === "loading" && <p>Loading...</p>}
-          {status === "failed" && <p>Error: {error}</p>}
-          {status === "succeeded" &&
-            pokemonList.map((pokemon: Pokemon) => (
-              <Grid key={pokemon.id} item xs={12} sm={6} md={4} lg={3}>
-                <Card
-                  className={`pokemon-card ${isCardOpen ? "open-card" : ""}`}
-                  sx={{
-                    position: "relative",
-                    display: "flex",
-                    alignItems: "center",
-                    flexDirection: "column",
-                    cursor: "pointer",
-                    marginBottom: "20px",
-                    boxShadow: "none",
-                    border: "none",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    className="pokemon-card-media"
+      <Grid>
+        <CustomPagination count={65} page={page} onChange={handlePageChange} />
+        <div className="pokemon-list-container">
+          <Grid container spacing={2}>
+            {status === "loading" && <p>Loading...</p>}
+            {status === "failed" && <p>Error: {error}</p>}
+            {status === "succeeded" &&
+              pokemonList.map((pokemon: Pokemon) => (
+                <Grid key={pokemon.id} item xs={12} sm={6} md={4} lg={3}>
+                  <Card
+                    className={`pokemon-card ${isCardOpen ? "open-card" : ""}`}
                     sx={{
-                      objectFit: "cover",
-                      borderRadius: "10px",
-                      filter: "brightness(1.2)",
+                      position: "relative",
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                      cursor: "pointer",
+                      marginBottom: "20px",
+                      boxShadow: "none",
+                      border: "none",
                     }}
-                    image={pokemon.sprites.front_default}
-                    alt={pokemon.name}
-                    onClick={() => handleCardClick(pokemon)}
-                  />
-                  {selectedCard && selectedCard.id === pokemon.id && (
-                    <Grid item xs={12} sm={6} md={4} lg={3} padding={"2vw"}>
-                      <CardContent
-                        className={`${isCardOpen} spin-animation`}
-                        sx={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          right: 0,
-                          bottom: 0,
-                          background: getColorForType(
-                            pokemon.types[0].type.name
-                          ),
-                          borderRadius: "10px",
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <Typography
-                          fontFamily={"VT323"}
-                          fontSize={"5vw"}
-                          component="div"
-                          color="#070707"
+                  >
+                    <CardMedia
+                      component="img"
+                      className="pokemon-card-media"
+                      sx={{
+                        objectFit: "cover",
+                        borderRadius: "10px",
+                        filter: "brightness(1.2)",
+                      }}
+                      image={pokemon.sprites.front_default}
+                      alt={pokemon.name}
+                      onClick={() => handleCardClick(pokemon)}
+                    />
+                    {selectedCard && selectedCard.id === pokemon.id && (
+                      <Grid container padding={"2vw"}>
+                        <CardContent
+                          className={`${isCardOpen} spin-animation`}
+                          sx={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: getColorForType(
+                              pokemon.types[0].type.name
+                            ),
+                            borderRadius: "10px",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
                         >
-                          {pokemon.name}
-                        </Typography>
-                        <Typography
-                          fontSize={"3vw"}
-                          fontFamily={"VT323"}
-                          component="div"
-                          color="#070707"
-                        >
-                          #{pokemon.id}
-                        </Typography>
-                        <Typography
-                          fontSize={"2vw"}
-                          fontFamily={"VT323"}
-                          color="#070707"
-                        >
-                          Tamanho: {pokemon.height} cm
-                          <br />
-                          Peso: {pokemon.weight} kg
-                        </Typography>
-                        <button
-                          onClick={handleDetailsClick}
-                          className="comic-button"
-                        >
-                          Detalhes
-                        </button>
-                      </CardContent>
-                    </Grid>
-                  )}
-                </Card>
-              </Grid>
-            ))}
-        </Grid>
+                          <Typography
+                            fontFamily={"VT323"}
+                            fontSize={"5vh"}
+                            component="div"
+                            color="#070707"
+                          >
+                            {pokemon.name}
+                          </Typography>
+                          <Typography
+                            fontSize={"4vh"}
+                            fontFamily={"VT323"}
+                            component="div"
+                            color="#070707"
+                          >
+                            #{pokemon.id}
+                          </Typography>
+                          <Typography
+                            fontSize={"3vh"}
+                            fontFamily={"VT323"}
+                            color="#070707"
+                          >
+                            Tamanho: {pokemon.height} cm
+                            <br />
+                            Peso: {pokemon.weight} kg
+                          </Typography>
+                          <button
+                            style={{
+                              maxHeight: "10vh",
+                              maxWidth: "15vw",
+                              marginTop: "1vw",
+                              fontSize: "1.6vh",
+                            }}
+                            onClick={handleDetailsClick}
+                            className="comic-button"
+                          >
+                            Detalhes
+                          </button>
+                        </CardContent>
+                      </Grid>
+                    )}
+                  </Card>
+                </Grid>
+              ))}
+          </Grid>
 
-        <Modal
-          open={openModal}
-          onClose={handleCloseModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-          className="pokemon-modal"
-        >
-          <div className="pokemon-modal-container">
-            <PokemonDetailModal
-              onClose={handleCloseModal}
-              pokemon={selectedPokemon}
-            />
-          </div>
-        </Modal>
-      </div>
+          <Modal
+            open={openModal}
+            onClose={handleCloseModal}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            className="pokemon-modal"
+          >
+            <div className="pokemon-modal-container">
+              <PokemonDetailModal
+                onClose={handleCloseModal}
+                pokemon={selectedPokemon}
+              />
+            </div>
+          </Modal>
+        </div>
+      </Grid>
     </>
   );
 };

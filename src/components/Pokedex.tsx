@@ -1,4 +1,3 @@
-// src/features/pokedex/Pokedex.tsx
 import React, { useState, useEffect } from "react";
 import {
   Grid,
@@ -6,17 +5,15 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  Drawer,
-  IconButton,
   Modal,
 } from "@mui/material";
-import { MdChevronRight } from "react-icons/md";
+
 import { useAppDispatch, useAppSelector } from "../store";
 import { removeFromPokedex } from "../store/modules/pokedex/pokedexSlice";
-import RemoveFromFavoritesButton from "./RemoveFavoriteButton";
-
 import PokemonDetailModal from "./PokemonDetailModal";
 import { Pokemon } from "../types/pokemonTypes";
+import imageFundo from "../assets/pai-card.png";
+import RemoveFromFavoritesButton from "./RemoveFavoriteButton";
 
 interface PokemonDetails {
   name: string;
@@ -30,7 +27,6 @@ const Pokedex: React.FC = () => {
   const dispatch = useAppDispatch();
   const { favoritePokemon } = useAppSelector((state) => state.pokedex);
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
 
@@ -57,14 +53,6 @@ const Pokedex: React.FC = () => {
     });
   }, [favoritePokemon]);
 
-  const handleDrawerOpen = () => {
-    setDrawerOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setDrawerOpen(false);
-  };
-
   const handleOpenModal = (pokemon: Pokemon) => {
     setSelectedPokemon(pokemon);
     setOpenModal(true);
@@ -83,60 +71,91 @@ const Pokedex: React.FC = () => {
   };
 
   return (
-    <>
-      <Grid container spacing={2}>
-        {/* Botão para abrir o card lateral */}
-        <Grid item xs={12}>
-          <IconButton onClick={handleDrawerOpen} sx={{ fontSize: 40 }}>
-            <MdChevronRight />
-          </IconButton>
-        </Grid>
-      </Grid>
+    <Grid
+      mt={3}
+      mb={3}
+      marginRight={2}
+      container
+      spacing={1}
+      alignContent={"flex-start"}
+      style={{
+        padding: "3vh",
+        width: "45%",
+        backgroundColor: "#666274",
+      }}
+    >
+      <img
+        style={{
+          marginLeft: "0.4vw",
+          width: "100%",
+          maxHeight: "6vh",
+        }}
+        src={imageFundo}
+        alt=""
+      />
+      {pokemonDetails.map((pokemon) => (
+        <Grid item key={pokemon.id} xs={12}>
+          <Card
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#bfbfc2",
+              border: "4px solid #917474",
+              padding: "2vh",
+            }}
+          >
+            <CardMedia
+              component="img"
+              sx={{
+                backgroundColor: "#000000",
+                border: "solid 5px black",
+                maxHeight: "20vh",
+                maxWidth: "20vw",
+              }}
+              image={pokemon.sprites.front_default}
+              alt={pokemon.name}
+            />
+            <CardContent>
+              <Typography
+                variant="h5"
+                fontFamily={"VT323"}
+                textAlign={"center"}
+                fontSize={"3vw"}
+                component="div"
+              >
+                {pokemon.name}
+              </Typography>
+              {/* Botão Adicionar/Remover dos Favoritos e Detalhes no card lateral */}
+              <Grid
+                width={"20vw"}
+                container
+                justifyContent="space-evenly"
+                alignItems={"center"}
+                alignSelf={"center"}
+              >
+                <button
+                  onClick={() => handleOpenModal(pokemon as Pokemon)}
+                  className="comic-button"
+                  style={{
+                    marginBottom: "0.2vh",
+                  }}
+                >
+                  Detalhes
+                </button>
 
-      {/* Card lateral com a lista de pokémons favoritos */}
-      <Drawer
-        anchor="right"
-        open={drawerOpen}
-        onClose={handleDrawerClose}
-        PaperProps={{ style: { width: "300px" } }}
-      >
-        <Grid container spacing={2} style={{ padding: "16px" }}>
-          {pokemonDetails.map((pokemon) => (
-            <Grid item key={pokemon.id} xs={12}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={pokemon.sprites.front_default}
-                  alt={pokemon.name}
-                />
-                <CardContent>
-                  <Typography variant="h6" component="div">
-                    {pokemon.name}
-                  </Typography>
-                  {/* Botão Adicionar/Remover dos Favoritos e Detalhes no card lateral */}
-                  <Grid container justifyContent="space-between">
-                    <Grid item>
-                      <RemoveFromFavoritesButton
-                        pokemonId={pokemon.id}
-                        onRemove={handleRemoveFromPokedex}
-                      />
-                    </Grid>
-                    <Grid item>
-                      <button
-                        onClick={() => handleOpenModal(pokemon as Pokemon)}
-                        className="comic-button"
-                      >
-                        Detalhes
-                      </button>
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
+                <Grid item>
+                  <RemoveFromFavoritesButton
+                    pokemonId={pokemon.id}
+                    onRemove={handleRemoveFromPokedex}
+                  />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
         </Grid>
-      </Drawer>
+      ))}
 
       {/* Modal para exibir os detalhes do Pokémon */}
       <Modal
@@ -152,7 +171,7 @@ const Pokedex: React.FC = () => {
           />
         </div>
       </Modal>
-    </>
+    </Grid>
   );
 };
 

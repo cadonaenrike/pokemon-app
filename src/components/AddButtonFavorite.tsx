@@ -46,7 +46,7 @@ const AddToFavoritesButton: React.FC<AddToFavoritesButtonProps> = ({
         <span
           style={{
             fontFamily: "VT323",
-            fontSize: "1vw",
+            fontSize: "2vh",
           }}
         >
           Adicionar Aos favoritos

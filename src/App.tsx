@@ -7,14 +7,11 @@ const App: React.FC = () => {
   return (
     <>
       <Grid
-        container
-        spacing={1}
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        alignContent="center"
-        wrap="wrap"
-        padding={10}
+        sx={{
+          display: "flex",
+          paddingBottom: "2vh",
+          backgroundColor: "#f5cbc3",
+        }}
       >
         <Pokedex />
         <PokemonList />
