@@ -9,7 +9,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor: url(http://www.rw-designer.com/cursor-extern.php?id=14474);
 }
 
 a {
@@ -30,6 +29,10 @@ body {
   min-height: 100vh;
 }
 
+body,
+* {
+  cursor: url("./assets/pokemonHand.cur") 80 80, auto !important;
+}
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

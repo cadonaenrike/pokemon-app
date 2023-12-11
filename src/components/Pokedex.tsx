@@ -127,6 +127,7 @@ const Pokedex: React.FC = () => {
               >
                 {pokemon.name}
               </Typography>
+
               {/* Botão Adicionar/Remover dos Favoritos e Detalhes no card lateral */}
               <Grid
                 width={"20vw"}

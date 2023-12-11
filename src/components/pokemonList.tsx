@@ -70,7 +70,19 @@ const PokemonList: React.FC = () => {
         <CustomPagination count={65} page={page} onChange={handlePageChange} />
         <div className="pokemon-list-container">
           <Grid container spacing={2}>
-            {status === "loading" && <p>Loading...</p>}
+            {status === "loading" && (
+              <img
+                src="https://media.tenor.com/Cm7KfjVqri4AAAAi/pokemon-pokeball.gif"
+                alt="Loading..."
+                style={{
+                  width: "50rem",
+                  height: "50rem",
+                  margin: "auto",
+                  display: "block",
+                }}
+              />
+            )}
+
             {status === "failed" && <p>Error: {error}</p>}
             {status === "succeeded" &&
               pokemonList.map((pokemon: Pokemon) => (
